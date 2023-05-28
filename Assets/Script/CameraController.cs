@@ -50,19 +50,26 @@ public class CameraController : MonoBehaviour
     private float ySpeed = 120.0f;
 
     /// <summary>
-    /// 
+    /// 「y」方向の最小角度
     /// </summary>
     [SerializeField]
-    private float yMinLimit = -20f;
+    private float minAngleY = -20f;
 
     /// <summary>
-    /// 
+    /// 「y」方向の最大角度
     /// </summary>
     [SerializeField]
-    private float yMaxLimit = 80f;
+    private float maxAngleY = 80f;
 
-    private float x = 0.0f;
-    private float y = 0.0f;
+    /// <summary>
+    /// 現在の「x」角度
+    /// </summary>
+    private float currentAngleX = 0.0f;
+
+    /// <summary>
+    /// 現在の「y」角度
+    /// </summary>
+    private float currentAngleY = 0.0f;
 
     /// <summary>
     /// ゲーム開始直後に呼び出される
@@ -73,10 +80,10 @@ public class CameraController : MonoBehaviour
         Vector3 firstCameraAngles = transform.eulerAngles;
 
         //カメラの「x」角度の初期値を保持する
-        x = firstCameraAngles.y;
+        currentAngleX = firstCameraAngles.y;
 
         //カメラの「y」角度の初期値を保持する
-        y = firstCameraAngles.x;
+        currentAngleY = firstCameraAngles.x;
 
         //毎フレーム、対象物との距離を更新する
         this.UpdateAsObservable()
@@ -126,19 +133,19 @@ public class CameraController : MonoBehaviour
     /// </summary>
     private void UpdateAngleAndPos()
     {
+        //スクロールバーが操作されているなら、以降の処理を行わない
         if (ScrollbarInteractionManager.instance.scrollbarIsInteract) return;
 
         //1本指でタッチされていないなら、以降の処理を行わない
         if (!Input.GetMouseButton(0) && (!Input.touchSupported || Input.touchCount != 1)) return;
 
         //if (Input.GetMouseButton(0) || (Input.touchSupported && Input.touchCount == 1))
-        //{
 
-        //
-        float moveX = Input.GetAxis("Mouse X") * xSpeed * Time.deltaTime;
+        //「x」方向の移動量を取得する
+        float moveValueX = Input.GetAxis("Mouse X") * xSpeed * Time.deltaTime;
 
-        //
-        float moveY = Input.GetAxis("Mouse Y") * ySpeed * Time.deltaTime;
+        //「y」方向の移動量を取得する
+        float moveValueY = Input.GetAxis("Mouse Y") * ySpeed * Time.deltaTime;
 
         //使用デバイスがタッチ入力をサポートしているなら
         if (Input.touchSupported)
@@ -146,24 +153,29 @@ public class CameraController : MonoBehaviour
             //タッチの情報を取得する
             Touch touch = Input.GetTouch(0);
 
-            moveX = touch.phase == TouchPhase.Moved ? -touch.deltaPosition.x * xSpeed * 0.005f : 0f;
-            moveY = touch.phase == TouchPhase.Moved ? -touch.deltaPosition.y * ySpeed * 0.005f : 0f;
+            //各方向の移動量を調整する
+            moveValueX = touch.phase == TouchPhase.Moved ? -touch.deltaPosition.x * xSpeed * 0.005f : 0f;
+            moveValueY = touch.phase == TouchPhase.Moved ? -touch.deltaPosition.y * ySpeed * 0.005f : 0f;
         }
 
-        x += moveX;
-        y -= moveY;
+        //現在の各角度を更新する
+        currentAngleX += moveValueX;
+        currentAngleY -= moveValueY;
 
-        y = ClampAngle(y, yMinLimit, yMaxLimit);
+        //現在の「y」角度を調整する
+        currentAngleY = ClampAngle(currentAngleY, minAngleY, maxAngleY);
 
-        //}
-
+        //適切な対象物との距離を取得する
         distance = Mathf.Clamp(distance, minDistance, maxDistance);
 
-        Quaternion rotation = Quaternion.Euler(y, x, 0);
-        Vector3 position = rotation * new Vector3(0.0f, 0.0f, -distance) + lookTran.position;
+        //適切なカメラの角度を取得する
+        Quaternion rotation = Quaternion.Euler(currentAngleY, currentAngleX, 0);
 
+        //カメラの角度を設定する
         transform.rotation = rotation;
-        transform.position = position;
+
+        //カメラの座標を設定する
+        transform.position = rotation * new Vector3(0.0f, 0.0f, -distance) + lookTran.position;
     }
 
     /// <summary>

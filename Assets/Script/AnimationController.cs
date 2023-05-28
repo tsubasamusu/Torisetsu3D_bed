@@ -1,5 +1,3 @@
-using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
 
 /// <summary>
@@ -19,23 +17,27 @@ public class AnimationController : MonoBehaviour
     [SerializeField]
     private string animationName;
 
+    /// <summary>
+    /// 再生速度アップ時の速度
+    /// </summary>
     [SerializeField]
     private float speedUpVelocity = 1.5f;
 
+    /// <summary>
+    /// 再生速度ダウン時の速度
+    /// </summary>
     [SerializeField]
     private float speedDownVelocity = 1.5f;
 
-    private bool isReturn;
+    /// <summary>
+    /// 巻き戻し中かどうか
+    /// </summary>
+    private bool isRewinding;
 
     /// <summary>
     /// アニメーションの再生速度の初期値
     /// </summary>
     private float defaultAnimationSpeed;
-
-    /// <summary>
-    /// 現在のアニメーションの再生速度
-    /// </summary>
-    private float currentAnimationSpeed;
 
     /// <summary>
     /// ゲーム開始直後に呼び出される
@@ -47,20 +49,15 @@ public class AnimationController : MonoBehaviour
 
         //アニメーションの再生速度を「0」に設定する
         bedAnimator.speed = 0;
-
-        //現在のアニメーションの再生速度を毎フレーム取得する
-        this.UpdateAsObservable()
-            .Subscribe(_ => currentAnimationSpeed = bedAnimator.speed)
-            .AddTo(this);
     }
-
 
     /// <summary>
     /// アニメーションを開始する
     /// </summary>
     public void StartAnimation()
     {
-        isReturn = false;
+        //巻き戻し中ではない状態に切り替える
+        isRewinding = false;
 
         //アニメーションの再生速度を「1」に設定する
         bedAnimator.SetFloat("Speed", 1f);
@@ -83,7 +80,8 @@ public class AnimationController : MonoBehaviour
     /// </summary>
     public void SpeedUpAnimation()
     {
-        isReturn = false;
+        //巻き戻し中ではない状態に切り替える
+        isRewinding = false;
 
         //アニメーションの再生速度を「1」に設定する
         bedAnimator.SetFloat("Speed", 1f);
@@ -97,7 +95,8 @@ public class AnimationController : MonoBehaviour
     /// </summary>
     public void SlowDownAnimation()
     {
-        isReturn = false;
+        //巻き戻し中ではない状態に切り替える
+        isRewinding = false;
 
         //アニメーションの再生速度を「1」に設定する
         bedAnimator.SetFloat("Speed", 1f);
@@ -107,13 +106,15 @@ public class AnimationController : MonoBehaviour
     }
 
     /// <summary>
-    /// 
+    /// アニメーションを巻き戻す
     /// </summary>
     public void ReturnAnimation()
     {
-        if (isReturn) return;
+        //巻き戻し中なら、以降の処理を行わない
+        if (isRewinding) return;
 
-        isReturn = true;
+        //巻き戻し中である状態に切り替える
+        isRewinding = true;
 
         //アニメーションの再生速度を「-1」に設定する
         bedAnimator.SetFloat("Speed", -1f);
