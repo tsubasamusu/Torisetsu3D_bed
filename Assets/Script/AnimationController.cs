@@ -108,7 +108,7 @@ public class AnimationController : MonoBehaviour
     /// <summary>
     /// アニメーションを巻き戻す
     /// </summary>
-    public void ReturnAnimation()
+    public void RewindAnimation()
     {
         //巻き戻し中なら、以降の処理を行わない
         if (isRewinding) return;
