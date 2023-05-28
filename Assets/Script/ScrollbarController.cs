@@ -5,9 +5,9 @@ using UniRx.Triggers;
 using UniRx;
 
 /// <summary>
-/// プログレスバーを制御する
+/// スクロールバーを制御する
 /// </summary>
-public class ProgressBarController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class ScrollbarController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     /// <summary>
     /// ベッドのアニメーター
@@ -69,7 +69,7 @@ public class ProgressBarController : MonoBehaviour, IPointerDownHandler, IPointe
         isDragging = true;
 
 
-        UIInteractionManager.Instance.IsScrollbarInteracting = true;
+        ScrollbarInteractionManager.instance.scrollbarIsInteract = true;
     }
 
     /// <summary>
@@ -81,7 +81,7 @@ public class ProgressBarController : MonoBehaviour, IPointerDownHandler, IPointe
         //ドラッグ中ではない状態に切り変える
         isDragging = false;
 
-        UIInteractionManager.Instance.IsScrollbarInteracting = false;
+        ScrollbarInteractionManager.instance.scrollbarIsInteract = false;
 
         //スクロールバーの値に対応した地点からアニメーションを再生する
         bedAnimator.Play(animationName, -1, scrollbar.value);
