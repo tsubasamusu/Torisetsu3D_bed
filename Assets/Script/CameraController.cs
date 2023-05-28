@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class OrbitCamera : MonoBehaviour
+/// <summary>
+/// 
+/// </summary>
+public class CameraController : MonoBehaviour
 {
     public Transform target;
     public float distance = 5.0f;
