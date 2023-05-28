@@ -33,6 +33,7 @@ public class ScrollbarToAnimation : MonoBehaviour
         //スクロールバーの値が変更された際に呼び出されるメソッドを登録する
         scrollbar.onValueChanged.AddListener(OnScrollbarValueChange);
 
+        //毎フレーム行う処理
         this.UpdateAsObservable()
             .Subscribe(_ =>
             {
