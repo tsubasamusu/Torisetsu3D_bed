@@ -1870,6 +1870,7 @@ MonoBehaviour:
   speedUpVelocity: 5
   speedDownVelocity: 3
   keepTimeAtEnd: 1
+  considerFinishedPercentage: 99
 --- !u!4 &2125742400
 Transform:
   m_ObjectHideFlags: 0

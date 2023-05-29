@@ -1,4 +1,7 @@
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// アニメーションを制御する
@@ -36,6 +39,12 @@ public class AnimationController : MonoBehaviour
     private float keepTimeAtEnd;
 
     /// <summary>
+    /// アニメーションの何％が終わったらアニメーション終了と判定するか
+    /// </summary>
+    [SerializeField,Range(0f,100f),Header("アニメーションの何％が終わったらアニメーション終了と判定するか")]
+    private float considerFinishedPercentage;
+
+    /// <summary>
     /// 巻き戻し中かどうか
     /// </summary>
     private bool isRewinding;
@@ -55,6 +64,21 @@ public class AnimationController : MonoBehaviour
 
         //アニメーションの再生速度を「0」に設定する
         bedAnimator.speed = 0;
+
+        this.UpdateAsObservable()
+            .Subscribe(_ =>
+            {
+                //アニメーションの状態を取得する
+                AnimatorStateInfo animatorStateInfo = bedAnimator.GetCurrentAnimatorStateInfo(0);
+
+                if ((animatorStateInfo.normalizedTime % 1f) >=(considerFinishedPercentage/100f)) OnAnimationEnd();
+            })
+            .AddTo(this);
+    }
+
+    private void OnAnimationEnd()
+    {
+        Debug.Log("END");
     }
 
     /// <summary>
@@ -160,10 +184,5 @@ public class AnimationController : MonoBehaviour
 
         //スクロールバーの値に対応した場所からアニメーションを再生する
         bedAnimator.Play(stateInfo.fullPathHash, -1, 0f);
-    }
-
-    public void OnAnimationEnd()
-    {
-        Debug.Log("END");
     }
 }
