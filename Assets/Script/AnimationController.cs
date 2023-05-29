@@ -134,4 +134,25 @@ public class AnimationController : MonoBehaviour
         //アニメーションの再生速度を初期値に設定する
         bedAnimator.speed = defaultAnimationSpeed;
     }
+
+    /// <summary>
+    /// アニメーションを最初から再生する
+    /// </summary>
+    public void PlayAnimationFromOrigin()
+    {
+        //巻き戻し中ではない状態に切り替える
+        isRewinding = false;
+
+        //アニメーションの再生速度を「1」に設定する
+        bedAnimator.SetFloat("Speed", 1f);
+
+        //アニメーションの再生速度を初期値に設定する
+        bedAnimator.speed = defaultAnimationSpeed;
+
+        //アニメーションの状態を取得する
+        AnimatorStateInfo stateInfo = bedAnimator.GetCurrentAnimatorStateInfo(0);
+
+        //スクロールバーの値に対応した場所からアニメーションを再生する
+        bedAnimator.Play(stateInfo.fullPathHash, -1, 0f);
+    }
 }
