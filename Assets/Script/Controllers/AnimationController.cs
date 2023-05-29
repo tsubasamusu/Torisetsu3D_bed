@@ -30,6 +30,12 @@ public class AnimationController : MonoBehaviour
     private float speedDownVelocity;
 
     /// <summary>
+    /// アニメーション終了時にそのアニメーションの状態を維持時間する
+    /// </summary>
+    [SerializeField]
+    private float keepTimeAtEnd;
+
+    /// <summary>
     /// 巻き戻し中かどうか
     /// </summary>
     private bool isRewinding;
@@ -154,5 +160,10 @@ public class AnimationController : MonoBehaviour
 
         //スクロールバーの値に対応した場所からアニメーションを再生する
         bedAnimator.Play(stateInfo.fullPathHash, -1, 0f);
+    }
+
+    public void OnAnimationEnd()
+    {
+        Debug.Log("END");
     }
 }
