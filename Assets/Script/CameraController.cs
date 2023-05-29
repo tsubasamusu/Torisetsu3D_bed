@@ -17,59 +17,59 @@ public class CameraController : MonoBehaviour
     /// 対象物との距離
     /// </summary>
     [SerializeField]
-    private float distance = 5.0f;
+    private float distance;
 
     /// <summary>
     /// ズーム速度
     /// </summary>
     [SerializeField]
-    private float zoomSpeed = 1.0f;
+    private float zoomSpeed;
 
     /// <summary>
     /// 対象物との最小距離
     /// </summary>
     [SerializeField]
-    private float minDistance = 1.0f;
+    private float minDistance;
 
     /// <summary>
     /// 対象物との最大距離
     /// </summary>
     [SerializeField]
-    private float maxDistance = 20.0f;
+    private float maxDistance;
 
     /// <summary>
     /// 「x」方向の速度
     /// </summary>
     [SerializeField]
-    private float xSpeed = 120.0f;
+    private float xSpeed;
 
     /// <summary>
     /// 「y」方向の速度
     /// </summary>
     [SerializeField]
-    private float ySpeed = 120.0f;
+    private float ySpeed;
 
     /// <summary>
     /// 「y」方向の最小角度
     /// </summary>
     [SerializeField]
-    private float minAngleY = -20f;
+    private float minAngleY;
 
     /// <summary>
     /// 「y」方向の最大角度
     /// </summary>
     [SerializeField]
-    private float maxAngleY = 80f;
+    private float maxAngleY;
 
     /// <summary>
     /// 現在の「x」角度
     /// </summary>
-    private float currentAngleX = 0.0f;
+    private float currentAngleX;
 
     /// <summary>
     /// 現在の「y」角度
     /// </summary>
-    private float currentAngleY = 0.0f;
+    private float currentAngleY;
 
     /// <summary>
     /// ゲーム開始直後に呼び出される
@@ -101,12 +101,6 @@ public class CameraController : MonoBehaviour
     /// </summary>
     private void UpdateDistance()
     {
-        //スクロールされた量を取得する
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-
-        //スクロールされた量をもとに、対象物との距離を取得する
-        distance = Mathf.Clamp(distance - (scroll * zoomSpeed * Time.deltaTime), minDistance, maxDistance);
-
         //2本指でタッチされていないなら、以降の処理を行わない
         if (!Input.touchSupported || Input.touchCount != 2) return;
 
@@ -139,13 +133,11 @@ public class CameraController : MonoBehaviour
         //1本指でタッチされていないなら、以降の処理を行わない
         if (!Input.GetMouseButton(0) && (!Input.touchSupported || Input.touchCount != 1)) return;
 
-        //if (Input.GetMouseButton(0) || (Input.touchSupported && Input.touchCount == 1))
-
         //「x」方向の移動量を取得する
-        float moveValueX = Input.GetAxis("Mouse X") * xSpeed * Time.deltaTime;
+        float moveValueX = Input.GetAxis("Mouse X");
 
         //「y」方向の移動量を取得する
-        float moveValueY = Input.GetAxis("Mouse Y") * ySpeed * Time.deltaTime;
+        float moveValueY = Input.GetAxis("Mouse Y");
 
         //使用デバイスがタッチ入力をサポートしているなら
         if (Input.touchSupported)
@@ -154,13 +146,13 @@ public class CameraController : MonoBehaviour
             Touch touch = Input.GetTouch(0);
 
             //各方向の移動量を調整する
-            moveValueX = touch.phase == TouchPhase.Moved ? -touch.deltaPosition.x * xSpeed * 0.005f : 0f;
-            moveValueY = touch.phase == TouchPhase.Moved ? -touch.deltaPosition.y * ySpeed * 0.005f : 0f;
+            moveValueX = touch.phase == TouchPhase.Moved ? -touch.deltaPosition.x : 0f;
+            moveValueY = touch.phase == TouchPhase.Moved ? -touch.deltaPosition.y : 0f;
         }
 
         //現在の各角度を更新する
-        currentAngleX += moveValueX;
-        currentAngleY -= moveValueY;
+        currentAngleX += moveValueX * xSpeed * Time.deltaTime;
+        currentAngleY -= moveValueY * ySpeed * Time.deltaTime;
 
         //現在の「y」角度を調整する
         currentAngleY = ClampAngle(currentAngleY, minAngleY, maxAngleY);

@@ -21,13 +21,13 @@ public class AnimationController : MonoBehaviour
     /// 再生速度アップ時の速度
     /// </summary>
     [SerializeField]
-    private float speedUpVelocity = 1.5f;
+    private float speedUpVelocity;
 
     /// <summary>
     /// 再生速度ダウン時の速度
     /// </summary>
     [SerializeField]
-    private float speedDownVelocity = 1.5f;
+    private float speedDownVelocity;
 
     /// <summary>
     /// 巻き戻し中かどうか
