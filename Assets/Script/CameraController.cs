@@ -1,6 +1,9 @@
+using System.Collections.Generic;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 /// <summary>
 /// カメラを制御する
@@ -110,6 +113,9 @@ public class CameraController : MonoBehaviour
         //2本目の指のタッチの情報を取得する
         Touch touch2 = Input.GetTouch(1);
 
+        //指が「UI」に触れているなら、以降の処理を行わない
+        if (TouchingUI(new(new[] { touch1, touch2 }))) return;
+
         //1本目か2本目の指が動いていないなら、以降の処理を行わない
         if (touch1.phase != TouchPhase.Moved || touch2.phase != TouchPhase.Moved) return;
 
@@ -144,6 +150,9 @@ public class CameraController : MonoBehaviour
         {
             //タッチの情報を取得する
             Touch touch = Input.GetTouch(0);
+
+            //指が「UI」に触れているなら、以降の処理を行わない
+            if (TouchingUI(new(new[] { touch }))) return;
 
             //各方向の移動量を調整する
             moveValueX = touch.phase == TouchPhase.Moved ? -touch.deltaPosition.x : 0f;
@@ -185,5 +194,39 @@ public class CameraController : MonoBehaviour
 
         //調整後の角度を制限して返す
         return Mathf.Clamp(angle, min, max);
+    }
+
+    /// <summary>
+    /// 「プレイヤーが『UI』をタッチしているかどうか」を取得する
+    /// </summary>
+    /// <param name="touches">タッチのリスト</param>
+    /// <returns>プレイヤーが「UI」をタッチしているかどうか</returns>
+    private bool TouchingUI(List<Touch> touches)
+    {
+        //画面に触れている指の数だけ繰り返す
+        for (int i = 0; i < touches.Count; i++)
+        {
+            //「PointerEventData」を作成する
+            PointerEventData pointData = new(EventSystem.current);
+
+            //「PointerEventData」の座標を設定する
+            pointData.position = touches[i].position;
+
+            //「RaycastAll」の結果格納用のリストを作成する
+            List<RaycastResult> rayResults = new();
+
+            //指に触れている全てのオブジェクト取得する
+            EventSystem.current.RaycastAll(pointData, rayResults);
+
+            //指に触れているオブジェクトの数だけ繰り返す
+            for (int j = 0; j < rayResults.Count; j++)
+            {
+                //指に触れているオブジェクトの1つが「UI」なら、「true」を返す
+                if (rayResults[j].gameObject.CompareTag("UI")) return true;
+            }
+        }
+
+        //「flase」を返す
+        return false;
     }
 }
