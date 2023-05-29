@@ -123,6 +123,47 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &240849960
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 240849961}
+  m_Layer: 0
+  m_Name: Buttons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &240849961
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 240849960}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1111475348}
+  - {fileID: 1431003661}
+  - {fileID: 1245459499}
+  - {fileID: 875089441}
+  - {fileID: 1795939888}
+  m_Father: {fileID: 1072632250}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &669505346
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,7 +303,6 @@ MonoBehaviour:
   ySpeed: 30
   minAngleY: -20
   maxAngleY: 80
-  txtDebug: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,6 +409,7 @@ GameObject:
   - component: {fileID: 875089443}
   - component: {fileID: 875089442}
   - component: {fileID: 875089444}
+  - component: {fileID: 875089445}
   m_Layer: 5
   m_Name: btnFast
   m_TagString: UI
@@ -385,10 +426,10 @@ RectTransform:
   m_GameObject: {fileID: 875089440}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 6.666666, z: 1}
+  m_LocalScale: {x: 1, y: 6.6666656, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1072632250}
+  m_Father: {fileID: 240849961}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -460,6 +501,33 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 875089445}
+          m_TargetAssemblyTypeName: ButtonColorChanger, Assembly-CSharp
+          m_MethodName: OnClicked
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &875089445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875089440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2b95122c753b7945824dc93483ea5e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonTexture_Normal: {fileID: 2800000, guid: faf9dbda43e39a9469f2f003c43cfbe2, type: 3}
+  buttonTexture_Active: {fileID: 2800000, guid: 6f23c2b342c7d6b4d9321d31b3a07b94, type: 3}
+  rawImage: {fileID: 875089442}
 --- !u!1 &886406742
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,12 +694,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 0.15, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1111475348}
-  - {fileID: 1431003661}
-  - {fileID: 1245459499}
-  - {fileID: 875089441}
-  - {fileID: 1795939888}
   - {fileID: 1902149409}
+  - {fileID: 240849961}
   m_Father: {fileID: 934481996}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -690,6 +754,7 @@ GameObject:
   - component: {fileID: 1111475350}
   - component: {fileID: 1111475349}
   - component: {fileID: 1111475351}
+  - component: {fileID: 1111475352}
   m_Layer: 5
   m_Name: btnStart
   m_TagString: UI
@@ -706,10 +771,10 @@ RectTransform:
   m_GameObject: {fileID: 1111475347}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 6.666666, z: 1}
+  m_LocalScale: {x: 1, y: 6.6666656, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1072632250}
+  m_Father: {fileID: 240849961}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -781,6 +846,33 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 1111475352}
+          m_TargetAssemblyTypeName: ButtonColorChanger, Assembly-CSharp
+          m_MethodName: OnClicked
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &1111475352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1111475347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2b95122c753b7945824dc93483ea5e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonTexture_Normal: {fileID: 2800000, guid: 308554e5e4970dd4088e5e0cac9583e7, type: 3}
+  buttonTexture_Active: {fileID: 2800000, guid: e3879970640f42347b49e469ad12f845, type: 3}
+  rawImage: {fileID: 1111475349}
 --- !u!1 &1137778279
 GameObject:
   m_ObjectHideFlags: 0
@@ -861,6 +953,7 @@ GameObject:
   - component: {fileID: 1245459501}
   - component: {fileID: 1245459500}
   - component: {fileID: 1245459502}
+  - component: {fileID: 1245459503}
   m_Layer: 5
   m_Name: btnRewind
   m_TagString: UI
@@ -877,10 +970,10 @@ RectTransform:
   m_GameObject: {fileID: 1245459498}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 6.666666, z: 1}
+  m_LocalScale: {x: 1, y: 6.6666656, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1072632250}
+  m_Father: {fileID: 240849961}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -952,6 +1045,33 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 1245459503}
+          m_TargetAssemblyTypeName: ButtonColorChanger, Assembly-CSharp
+          m_MethodName: OnClicked
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &1245459503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1245459498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2b95122c753b7945824dc93483ea5e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonTexture_Normal: {fileID: 2800000, guid: bc58cdea387e8c641a280cfa5268a4ff, type: 3}
+  buttonTexture_Active: {fileID: 2800000, guid: 420d62551540e2f469961d86763ab54c, type: 3}
+  rawImage: {fileID: 1245459500}
 --- !u!1 &1287637502
 GameObject:
   m_ObjectHideFlags: 0
@@ -1046,6 +1166,7 @@ GameObject:
   - component: {fileID: 1431003663}
   - component: {fileID: 1431003662}
   - component: {fileID: 1431003664}
+  - component: {fileID: 1431003665}
   m_Layer: 5
   m_Name: btnStop
   m_TagString: UI
@@ -1062,10 +1183,10 @@ RectTransform:
   m_GameObject: {fileID: 1431003660}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 6.666666, z: 1}
+  m_LocalScale: {x: 1, y: 6.6666656, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1072632250}
+  m_Father: {fileID: 240849961}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -1137,6 +1258,33 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 1431003665}
+          m_TargetAssemblyTypeName: ButtonColorChanger, Assembly-CSharp
+          m_MethodName: OnClicked
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &1431003665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1431003660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2b95122c753b7945824dc93483ea5e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonTexture_Normal: {fileID: 2800000, guid: dc8848095e42aa04ca40c89610121d16, type: 3}
+  buttonTexture_Active: {fileID: 2800000, guid: 76e99167d4cbe8b4d972f95d98ce57ec, type: 3}
+  rawImage: {fileID: 1431003662}
 --- !u!1 &1550682156
 GameObject:
   m_ObjectHideFlags: 0
@@ -1303,6 +1451,7 @@ GameObject:
   - component: {fileID: 1795939890}
   - component: {fileID: 1795939889}
   - component: {fileID: 1795939891}
+  - component: {fileID: 1795939892}
   m_Layer: 5
   m_Name: btnSlow
   m_TagString: UI
@@ -1319,15 +1468,15 @@ RectTransform:
   m_GameObject: {fileID: 1795939887}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 6.666666, z: 1}
+  m_LocalScale: {x: 1, y: 6.6666656, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1072632250}
+  m_Father: {fileID: 240849961}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 834.4999}
+  m_AnchoredPosition: {x: 0, y: 450}
   m_SizeDelta: {x: 150, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1795939889
@@ -1394,6 +1543,33 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 1795939892}
+          m_TargetAssemblyTypeName: ButtonColorChanger, Assembly-CSharp
+          m_MethodName: OnClicked
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &1795939892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1795939887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2b95122c753b7945824dc93483ea5e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonTexture_Normal: {fileID: 2800000, guid: 9f1afba10943735408095e29bff97d65, type: 3}
+  buttonTexture_Active: {fileID: 2800000, guid: 6ce4df37b0777bc4ca73dc97895ec989, type: 3}
+  rawImage: {fileID: 1795939889}
 --- !u!1 &1836484300 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9af94621c9bef1145b53a3c9b04f59f1, type: 3}
@@ -1626,7 +1802,7 @@ RectTransform:
   m_Children:
   - {fileID: 1287637503}
   m_Father: {fileID: 1072632250}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
