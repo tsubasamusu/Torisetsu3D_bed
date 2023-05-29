@@ -1,7 +1,9 @@
+using Cysharp.Threading.Tasks;
+using System;
+using System.Threading;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
-using UnityEngine.UI;
 
 /// <summary>
 /// アニメーションを制御する
@@ -39,12 +41,6 @@ public class AnimationController : MonoBehaviour
     private float keepTimeAtEnd;
 
     /// <summary>
-    /// アニメーションの何％が終わったらアニメーション終了と判定するか
-    /// </summary>
-    [SerializeField,Range(0f,100f),Header("アニメーションの何％が終わったらアニメーション終了と判定するか")]
-    private float considerFinishedPercentage;
-
-    /// <summary>
     /// 巻き戻し中かどうか
     /// </summary>
     private bool isRewinding;
@@ -64,21 +60,32 @@ public class AnimationController : MonoBehaviour
 
         //アニメーションの再生速度を「0」に設定する
         bedAnimator.speed = 0;
-
-        this.UpdateAsObservable()
-            .Subscribe(_ =>
-            {
-                //アニメーションの状態を取得する
-                AnimatorStateInfo animatorStateInfo = bedAnimator.GetCurrentAnimatorStateInfo(0);
-
-                if ((animatorStateInfo.normalizedTime % 1f) >=(considerFinishedPercentage/100f)) OnAnimationEnd();
-            })
-            .AddTo(this);
     }
 
-    private void OnAnimationEnd()
+    /// <summary>
+    /// アニメーションが終了した際に呼び出される
+    /// </summary>
+    public void OnAnimationEnd(string text)
     {
-        Debug.Log("END");
+        //一定時間、アニメーションの状態を維持する
+        KeepAnimationAsync(this.GetCancellationTokenOnDestroy()).Forget();
+    }
+
+    /// <summary>
+    /// 一定時間、アニメーションの状態を維持する
+    /// </summary>
+    /// <param name="token">CancellationToken</param>
+    /// <returns>待ち時間</returns>
+    private async UniTaskVoid KeepAnimationAsync(CancellationToken token)
+    {
+        //アニメーションを停止する
+        StopAnimation();
+
+        //一定時間待つ
+        await UniTask.Delay(TimeSpan.FromSeconds(keepTimeAtEnd), cancellationToken: token);
+
+        //アニメーションを最初から再生する
+        PlayAnimationFromOrigin();
     }
 
     /// <summary>
