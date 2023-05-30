@@ -1,7 +1,12 @@
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using System;
 using System.Linq;
+using System.Threading;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// カメラの対象位置を制御する
@@ -15,22 +20,28 @@ public class LookTranController : MonoBehaviour
     private CameraController cameraController;
 
     /// <summary>
-    /// 「Canvas」の「RectTransform」
-    /// </summary>
-    [SerializeField]
-    private RectTransform canvasRectTran;
-
-    /// <summary>
     /// タップ時のエフェクトのプレハブ
     /// </summary>
     [SerializeField]
     private TapEffectController tapEffectPrefab;
 
     /// <summary>
+    /// 「Canvas」の「RectTransform」
+    /// </summary>
+    [SerializeField]
+    private RectTransform canvasRectTran;
+
+    /// <summary>
     /// 光線の長さ
     /// </summary>
     [SerializeField]
     private float rayLength;
+
+    /// <summary>
+    /// カメラの対象位置更新時の移動時間
+    /// </summary>
+    [SerializeField]
+    private float moveTime;
 
     /// <summary>
     /// カメラの対象位置の初期値
@@ -48,14 +59,16 @@ public class LookTranController : MonoBehaviour
         //「UI」以外の画面をタップされたら、カメラの対象位置を更新する
         this.UpdateAsObservable()
             .Where(_ => Input.GetMouseButtonDown(0) && Input.touchSupported && Input.touchCount == 1 && !cameraController.TouchingUI())
-            .Subscribe(_ => UpdateLookTranPos())
+            .Subscribe(_ => UpdateLookTranPosAsync(this.GetCancellationTokenOnDestroy()).Forget())
             .AddTo(this);
     }
 
     /// <summary>
     /// カメラの対象位置を更新する
     /// </summary>
-    private void UpdateLookTranPos()
+    /// <param name="token">CancellationToken</param>
+    /// <returns>待ち時間</returns>
+    private async UniTaskVoid UpdateLookTranPosAsync(CancellationToken token)
     {
         //タップした座標から光線を発射する
         Ray ray = Camera.main.ScreenPointToRay(Input.touches[0].position);
@@ -63,27 +76,15 @@ public class LookTranController : MonoBehaviour
         //光線が何にも触れなかったら、以降の処理を行わない
         if (!Physics.Raycast(ray, out RaycastHit hit, rayLength)) return;
 
-        //自身の座標（カメラの対象位置）を設定する
-        transform.position = hit.point;
+        //カメラの対象位置の座標を更新後、タップ時のエフェクトを生成して初期設定を行う
+        transform.DOMove(hit.point, moveTime).OnComplete(() => Instantiate(tapEffectPrefab).SetUpTapEffectController(canvasRectTran, Vector3.zero));
 
-        //エフェクトを生成する
-        GenerateEffect();
-    }
-
-    /// <summary>
-    /// エフェクトを生成する
-    /// </summary>
-    private void GenerateEffect()
-    {
-        //タップ時のエフェクトを生成する
-        TapEffectController tapEffectController = Instantiate(tapEffectPrefab);
-
-        //生成したエフェクトの初期設定を行う
-        tapEffectController.SetUpTapEffectController(canvasRectTran, Vector3.zero);
+        //カメラの対象位置の移動が完了するまで待つ
+        await UniTask.Delay(TimeSpan.FromSeconds(moveTime), cancellationToken: token);
     }
 
     /// <summary>
     /// カメラの対象位置を初期値に戻す
     /// </summary>
-    public void ResetLookTranPos() { transform.position = defaultLookTranPos; }
+    public void ResetLookTranPos() { transform.DOMove(defaultLookTranPos, moveTime); }
 }

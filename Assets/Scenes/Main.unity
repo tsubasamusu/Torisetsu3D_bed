@@ -209,9 +209,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraController: {fileID: 694153732}
-  canvasRectTran: {fileID: 934481996}
   tapEffectPrefab: {fileID: 5887990795833301752, guid: bf9a6d9db816b2f44b3d2e39e11766ab, type: 3}
+  canvasRectTran: {fileID: 934481996}
   rayLength: 1000
+  moveTime: 0
 --- !u!1 &669505346
 GameObject:
   m_ObjectHideFlags: 0
