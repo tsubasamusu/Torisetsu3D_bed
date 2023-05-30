@@ -70,6 +70,9 @@ public class LookTranController : MonoBehaviour
     /// <returns>待ち時間</returns>
     private async UniTaskVoid UpdateLookTranPosAsync(CancellationToken token)
     {
+        //触れた指が動いているなら、以降の処理を行わない
+        if (Input.GetTouch(0).phase == TouchPhase.Moved) return;
+
         //タップした座標から光線を発射する
         Ray ray = Camera.main.ScreenPointToRay(Input.touches[0].position);
 
