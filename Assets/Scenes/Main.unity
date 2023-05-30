@@ -735,6 +735,8 @@ MonoBehaviour:
   timeBtweenSprites: 0.02
   imgBackground: {fileID: 1606186974}
   imgInformation: {fileID: 1289200535}
+  animationController: {fileID: 3026828582783858535}
+  btnStart: {fileID: 1111475352}
   informationSprites:
   - {fileID: 21300000, guid: a7f37cbe9c311f145a2d3555ca5c1025, type: 3}
   - {fileID: 21300000, guid: 65d11991cd49c5e4590e244bf0285a07, type: 3}

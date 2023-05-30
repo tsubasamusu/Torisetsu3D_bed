@@ -36,6 +36,18 @@ public class OpeningController : MonoBehaviour
     private Image imgInformation;
 
     /// <summary>
+    /// AnimationController
+    /// </summary>
+    [SerializeField]
+    private AnimationController animationController;
+
+    /// <summary>
+    /// 再生ボタンの「ButtonColorChanger」
+    /// </summary>
+    [SerializeField]
+    private ButtonColorChanger btnStart;
+
+    /// <summary>
     /// 説明画像のスプライトのリスト
     /// </summary>
     [SerializeField]
@@ -47,7 +59,7 @@ public class OpeningController : MonoBehaviour
     private void Start()
     {
         //オープニングを開始する
-        PlayOpeningAsync(this.GetCancellationTokenOnDestroy()).Forget();
+        StartOpeningAsync(this.GetCancellationTokenOnDestroy()).Forget();
     }
 
     /// <summary>
@@ -55,7 +67,7 @@ public class OpeningController : MonoBehaviour
     /// </summary>
     /// <param name="token">CancellationToken</param>
     /// <returns>待ち時間</returns>
-    private async UniTaskVoid PlayOpeningAsync(CancellationToken token)
+    private async UniTaskVoid StartOpeningAsync(CancellationToken token)
     {
         //説明画像の数だけ繰り返す
         for (int i = 0; i < informationSprites.Count; i++)
@@ -73,5 +85,14 @@ public class OpeningController : MonoBehaviour
 
         //一定時間待つ
         await UniTask.Delay(TimeSpan.FromSeconds(fadeOutTime), cancellationToken: token);
+
+        //アニメーションを開始する
+        animationController.StartAnimation();
+
+        //再生ボタンが押された際の処理を行う
+        btnStart.OnClicked();
+
+        //不要になったゲームオブジェクトを消す
+        Destroy(gameObject);
     }
 }
