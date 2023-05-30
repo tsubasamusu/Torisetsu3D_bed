@@ -1,8 +1,6 @@
 using Cysharp.Threading.Tasks;
 using System;
 using System.Threading;
-using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
 
 /// <summary>

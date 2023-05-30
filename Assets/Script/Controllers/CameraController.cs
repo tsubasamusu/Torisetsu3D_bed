@@ -3,7 +3,6 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 /// <summary>
 /// カメラを制御する
@@ -114,7 +113,7 @@ public class CameraController : MonoBehaviour
         Touch touch2 = Input.GetTouch(1);
 
         //指が「UI」に触れているなら、以降の処理を行わない
-        if (TouchingUI(new(new[] { touch1, touch2 }))) return;
+        if (TouchingUI()) return;
 
         //1本目か2本目の指が動いていないなら、以降の処理を行わない
         if (touch1.phase != TouchPhase.Moved || touch2.phase != TouchPhase.Moved) return;
@@ -152,7 +151,7 @@ public class CameraController : MonoBehaviour
             Touch touch = Input.GetTouch(0);
 
             //指が「UI」に触れているなら、以降の処理を行わない
-            if (TouchingUI(new(new[] { touch }))) return;
+            if (TouchingUI()) return;
 
             //各方向の移動量を調整する
             moveValueX = touch.phase == TouchPhase.Moved ? -touch.deltaPosition.x : 0f;
@@ -197,20 +196,23 @@ public class CameraController : MonoBehaviour
     }
 
     /// <summary>
-    /// 「プレイヤーが『UI』をタッチしているかどうか」を取得する
+    /// 「プレイヤーが『UI』をに触れているかどうか」を取得する
     /// </summary>
-    /// <param name="touches">タッチのリスト</param>
-    /// <returns>プレイヤーが「UI」をタッチしているかどうか</returns>
-    private bool TouchingUI(List<Touch> touches)
+    /// <returns>プレイヤーが「UI」に触れているかどうか</returns>
+    public bool TouchingUI()
     {
+        //全ての「Touch」を取得する
+        Touch[] touches = Input.touches;
+
         //画面に触れている指の数だけ繰り返す
-        for (int i = 0; i < touches.Count; i++)
+        for (int i = 0; i < touches.Length; i++)
         {
             //「PointerEventData」を作成する
-            PointerEventData pointData = new(EventSystem.current);
-
-            //「PointerEventData」の座標を設定する
-            pointData.position = touches[i].position;
+            PointerEventData pointData = new(EventSystem.current)
+            {
+                //「PointerEventData」の座標を設定する
+                position = touches[i].position
+            };
 
             //「RaycastAll」の結果格納用のリストを作成する
             List<RaycastResult> rayResults = new();
