@@ -103,6 +103,9 @@ public class CameraController : MonoBehaviour
     /// </summary>
     private void UpdateDistance()
     {
+        //指が「UI」に触れているなら、以降の処理を行わない
+        if (TouchingUI()) return;
+
         //2本指でタッチされていないなら、以降の処理を行わない
         if (!Input.touchSupported || Input.touchCount != 2) return;
 
@@ -111,9 +114,6 @@ public class CameraController : MonoBehaviour
 
         //2本目の指のタッチの情報を取得する
         Touch touch2 = Input.GetTouch(1);
-
-        //指が「UI」に触れているなら、以降の処理を行わない
-        if (TouchingUI()) return;
 
         //1本目か2本目の指が動いていないなら、以降の処理を行わない
         if (touch1.phase != TouchPhase.Moved || touch2.phase != TouchPhase.Moved) return;
@@ -132,9 +132,6 @@ public class CameraController : MonoBehaviour
     /// </summary>
     private void UpdateAngleAndPos()
     {
-        //スクロールバーが操作されているなら、以降の処理を行わない
-        if (ScrollbarInteractionManager.instance.scrollbarIsInteract) return;
-
         //1本指でタッチされていないなら、以降の処理を行わない
         if (!Input.GetMouseButton(0) && (!Input.touchSupported || Input.touchCount != 1)) return;
 

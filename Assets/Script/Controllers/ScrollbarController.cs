@@ -67,9 +67,6 @@ public class ScrollbarController : MonoBehaviour, IPointerDownHandler, IPointerU
     {
         //ドラッグ中である状態に切り替える
         isDragging = true;
-
-        //スクロールバーが操作されている状態に切り替える
-        ScrollbarInteractionManager.instance.scrollbarIsInteract = true;
     }
 
     /// <summary>
@@ -80,9 +77,6 @@ public class ScrollbarController : MonoBehaviour, IPointerDownHandler, IPointerU
     {
         //ドラッグ中ではない状態に切り変える
         isDragging = false;
-
-        //スクロールバーが操作されていない状態に切り替える
-        ScrollbarInteractionManager.instance.scrollbarIsInteract = false;
 
         //スクロールバーの値に対応した地点からアニメーションを再生する
         bedAnimator.Play(animationName, -1, scrollbar.value);

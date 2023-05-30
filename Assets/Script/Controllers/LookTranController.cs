@@ -21,10 +21,18 @@ public class LookTranController : MonoBehaviour
     private float rayLength;
 
     /// <summary>
+    /// カメラの対象位置の初期値
+    /// </summary>
+    private Vector3 defaultLookTranPos;
+
+    /// <summary>
     /// ゲーム開始直後に呼び出される
     /// </summary>
     private void Start()
     {
+        //カメラの対象位置の初期値を取得する
+        defaultLookTranPos = transform.position;
+
         //「UI」以外の画面をタップされたら、カメラの対象位置を更新する
         this.UpdateAsObservable()
             .Where(_ => Input.GetMouseButtonDown(0) && Input.touchSupported && Input.touchCount == 1 && !cameraController.TouchingUI())
@@ -45,5 +53,22 @@ public class LookTranController : MonoBehaviour
 
         //自身の座標（カメラの対象位置）を設定する
         transform.position = hit.point;
+
+        //エフェクトを生成する
+        Generateeffect(hit.point);
     }
+
+    /// <summary>
+    /// エフェクトを生成する
+    /// </summary>
+    /// <param name="generatePos">エフェクトの生成位置</param>
+    private void Generateeffect(Vector3 generatePos)
+    {
+        //TODO:エフェクトの生成処理
+    }
+
+    /// <summary>
+    /// カメラの対象位置を初期値に戻す
+    /// </summary>
+    public void ResetLookTranPos() { transform.position = defaultLookTranPos; }
 }
