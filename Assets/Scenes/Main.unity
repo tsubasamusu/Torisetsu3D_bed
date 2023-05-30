@@ -325,8 +325,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 694153728}
-  m_LocalRotation: {x: 0, y: 0.9396927, z: -0.3420201, w: 0}
-  m_LocalPosition: {x: 0.00000006696973, y: 0.6427876, z: 0.7660444}
+  m_LocalRotation: {x: 0.10494979, y: 0.89383966, z: -0.3318596, w: 0.28267562}
+  m_LocalPosition: {x: -1.2602607, y: 2.0906336, z: 1.803991}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -346,7 +346,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookTran: {fileID: 584241383}
-  distance: 1
   zoomSpeed: 0.5
   minDistance: 0.2
   maxDistance: 5
@@ -778,7 +777,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &983796359
 Transform:
   m_ObjectHideFlags: 0
@@ -842,6 +841,7 @@ MonoBehaviour:
   videoPlayer: {fileID: 983796360}
   imgBackground: {fileID: 1606186974}
   informationRawImage: {fileID: 745784296}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &1072632249
 GameObject:
   m_ObjectHideFlags: 0
@@ -1529,7 +1529,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1606186973
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1936,6 +1936,18 @@ MonoBehaviour:
         - m_Target: {fileID: 1111475352}
           m_TargetAssemblyTypeName: ButtonColorChanger, Assembly-CSharp
           m_MethodName: OnClicked
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 694153732}
+          m_TargetAssemblyTypeName: CameraController, Assembly-CSharp
+          m_MethodName: ResetCameraPos
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

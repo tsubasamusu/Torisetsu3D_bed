@@ -18,7 +18,6 @@ public class CameraController : MonoBehaviour
     /// <summary>
     /// 対象物との距離
     /// </summary>
-    [SerializeField]
     private float distance;
 
     /// <summary>
@@ -74,18 +73,39 @@ public class CameraController : MonoBehaviour
     private float currentAngleY;
 
     /// <summary>
+    /// 対象物との距離の初期値
+    /// </summary>
+    private float defaultDistance;
+
+    /// <summary>
+    /// カメラの座標の初期値
+    /// </summary>
+    private Vector3 defaultCameraPos;
+
+    /// <summary>
+    /// カメラの角度の初期値
+    /// </summary>
+    private Vector3 defaultAngles;
+
+    /// <summary>
     /// ゲーム開始直後に呼び出される
     /// </summary>
     private void Start()
     {
+        //対象物との距離の初期値を取得する
+        distance = defaultDistance = (transform.position - lookTran.position).magnitude;
+
+        //カメラの座標の初期値を取得する
+        defaultCameraPos = transform.position;
+
         //カメラの角度の初期値を取得する
-        Vector3 firstCameraAngles = transform.eulerAngles;
+        defaultAngles = transform.eulerAngles;
 
         //カメラの「x」角度の初期値を保持する
-        currentAngleX = firstCameraAngles.y;
+        currentAngleX = transform.eulerAngles.y;
 
         //カメラの「y」角度の初期値を保持する
-        currentAngleY = firstCameraAngles.x;
+        currentAngleY = transform.eulerAngles.x;
 
         //毎フレーム、対象物との距離を更新する
         this.UpdateAsObservable()
@@ -220,5 +240,26 @@ public class CameraController : MonoBehaviour
 
         //「flase」を返す
         return false;
+    }
+
+    /// <summary>
+    /// カメラの座標を初期化する
+    /// </summary>
+    public void ResetCameraPos()
+    {
+        //対象物との距離を初期値に設定する
+        distance = defaultDistance;
+
+        //カメラの座標を初期値に設定する
+        transform.position = defaultCameraPos;
+
+        //現在のカメラの「x」角度を初期値に設定する
+        currentAngleX = defaultAngles.y;
+
+        //現在のカメラの「y」角度を初期値に設定する
+        currentAngleY = defaultAngles.x;
+
+        //カメラの角度を初期値に設定する
+        transform.eulerAngles = defaultAngles;
     }
 }

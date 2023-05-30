@@ -1,4 +1,6 @@
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using System;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,6 +30,12 @@ public class OpeningController : MonoBehaviour
     private RawImage informationRawImage;
 
     /// <summary>
+    /// ”wŒi‚ÌF
+    /// </summary>
+    [SerializeField]
+    private Color backgroundColor;
+
+    /// <summary>
     /// ƒQ[ƒ€ŠJn’¼Œã‚ÉŒÄ‚Ño‚³‚ê‚é
     /// </summary>
     private void Start()
@@ -43,6 +51,12 @@ public class OpeningController : MonoBehaviour
     /// <returns>‘Ò‚¿ŠÔ</returns>
     private async UniTaskVoid PlayOpeningAsync(CancellationToken token)
     {
+        //”wŒi‚ÌF‚ğİ’è‚·‚é
+        imgBackground.color = backgroundColor;
 
+        imgBackground.DOFade(0f, 0f);
+
+        //ˆê’èŠÔ‘Ò‚Â
+        await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: token);
     }
 }
