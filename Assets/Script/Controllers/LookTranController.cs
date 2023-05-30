@@ -15,6 +15,12 @@ public class LookTranController : MonoBehaviour
     private CameraController cameraController;
 
     /// <summary>
+    /// タップ時のエフェクトのプレハブ
+    /// </summary>
+    [SerializeField]
+    private TapEffectController tapEffectPrefab;
+
+    /// <summary>
     /// 光線の長さ
     /// </summary>
     [SerializeField]
@@ -55,16 +61,23 @@ public class LookTranController : MonoBehaviour
         transform.position = hit.point;
 
         //エフェクトを生成する
-        Generateeffect(hit.point);
+        GenerateEffect(hit.point);
     }
 
     /// <summary>
     /// エフェクトを生成する
     /// </summary>
     /// <param name="generatePos">エフェクトの生成位置</param>
-    private void Generateeffect(Vector3 generatePos)
+    private void GenerateEffect(Vector3 generatePos)
     {
-        //TODO:エフェクトの生成処理
+        //タップ時のエフェクトを生成する
+        TapEffectController tapEffectController = Instantiate(tapEffectPrefab);
+
+        //生成したエフェクトの座標を設定する
+        tapEffectController.transform.position = generatePos;
+
+        //生成したエフェクトの初期設定を行う
+        tapEffectController.SetUpTapEffectController();
     }
 
     /// <summary>
