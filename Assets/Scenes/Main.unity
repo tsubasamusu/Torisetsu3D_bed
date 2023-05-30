@@ -344,8 +344,8 @@ MonoBehaviour:
   lookTran: {fileID: 584241383}
   distance: 1
   zoomSpeed: 0.5
-  minDistance: 0.5
-  maxDistance: 10
+  minDistance: 0.2
+  maxDistance: 5
   xSpeed: 10
   ySpeed: 10
   minAngleY: -20
