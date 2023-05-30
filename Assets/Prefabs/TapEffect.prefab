@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1d6a518e9138f449957bd30f8917ca3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBtweenSprites: 0.02
+  timeBtweenSprites: 0.075
   imgTapEffect: {fileID: 8197687442107441995}
   tapEffectSprites:
   - {fileID: 21300000, guid: 32bd97bdaf6504a42a7c6e2dbb237183, type: 3}

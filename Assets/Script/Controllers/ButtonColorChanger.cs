@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +26,18 @@ public class ButtonColorChanger : MonoBehaviour
     private RawImage rawImage;
 
     /// <summary>
+    /// このボタンがホームボタンかどうか
+    /// </summary>
+    [SerializeField]
+    private bool isHomeButton;
+
+    /// <summary>
+    /// このボタン以外のボタンのリスト
+    /// </summary>
+    [SerializeField, Header("このボタン以外のボタンのリスト")]
+    private List<ButtonColorChanger> otherButtons = new();
+
+    /// <summary>
     /// このボタンが有効かどうか
     /// </summary>
     private bool isActive;
@@ -34,6 +47,9 @@ public class ButtonColorChanger : MonoBehaviour
     /// </summary>
     private void Start()
     {
+        //このボタンがホームボタンなら、以降の処理を行わない
+        if (isHomeButton) return;
+
         //ボタンのテクスチャを通常時のそれに設定する
         rawImage.texture = buttonTexture_Normal;
 
@@ -42,14 +58,35 @@ public class ButtonColorChanger : MonoBehaviour
     }
 
     /// <summary>
+    /// 通常時のテクスチャに切り替える
+    /// </summary>
+    public void SetNormalTexture()
+    {
+        //ボタンが有効ではない状態に切り替える
+        isActive = false;
+
+        //ボタンのテクスチャを通常時のそれに設定する
+        rawImage.texture = buttonTexture_Normal;
+    }
+
+    /// <summary>
     /// このボタンを押された際に呼び出される
     /// </summary>
     public void OnClicked()
     {
+        //このボタン以外の全てのボタンのテクスチャを通常時のそれに設定する
+        foreach (ButtonColorChanger button in otherButtons) { button.SetNormalTexture(); }
+
+        //このボタンがホームボタンなら、以降の処理を行わない
+        if (isHomeButton) return;
+
+        //既にこのボタンが有効なら、以降の処理を行わない
+        if (isActive) return;
+
         //ボタンが有効かどうかを切り替える
         isActive = !isActive;
 
-        //ボタンのテクスチャを設定する
-        rawImage.texture = isActive ? buttonTexture_Active : buttonTexture_Normal;
+        //ボタンのテクスチャを有効時のそれに設定する
+        rawImage.texture = buttonTexture_Active;
     }
 }

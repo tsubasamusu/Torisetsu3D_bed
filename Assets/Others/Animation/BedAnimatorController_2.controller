@@ -20,7 +20,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 4e6690bb76768ad45a30e030ce3c4548, type: 2}
+  m_Motion: {fileID: 7400000, guid: 4217126093cacd54b91d4a68c413560f, type: 2}
   m_Tag: 
   m_SpeedParameter: Speed
   m_MirrorParameter: 
@@ -32,7 +32,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BedAnimatorController
+  m_Name: BedAnimatorController_2
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Speed
