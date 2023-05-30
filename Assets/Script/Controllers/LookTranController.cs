@@ -15,6 +15,12 @@ public class LookTranController : MonoBehaviour
     private CameraController cameraController;
 
     /// <summary>
+    /// 「Canvas」の「RectTransform」
+    /// </summary>
+    [SerializeField]
+    private RectTransform canvasRectTran;
+
+    /// <summary>
     /// タップ時のエフェクトのプレハブ
     /// </summary>
     [SerializeField]
@@ -61,23 +67,19 @@ public class LookTranController : MonoBehaviour
         transform.position = hit.point;
 
         //エフェクトを生成する
-        GenerateEffect(hit.point);
+        GenerateEffect();
     }
 
     /// <summary>
     /// エフェクトを生成する
     /// </summary>
-    /// <param name="generatePos">エフェクトの生成位置</param>
-    private void GenerateEffect(Vector3 generatePos)
+    private void GenerateEffect()
     {
         //タップ時のエフェクトを生成する
         TapEffectController tapEffectController = Instantiate(tapEffectPrefab);
 
-        //生成したエフェクトの座標を設定する
-        tapEffectController.transform.position = generatePos;
-
         //生成したエフェクトの初期設定を行う
-        tapEffectController.SetUpTapEffectController();
+        tapEffectController.SetUpTapEffectController(canvasRectTran, Vector3.zero);
     }
 
     /// <summary>

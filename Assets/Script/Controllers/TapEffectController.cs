@@ -33,15 +33,18 @@ public class TapEffectController : MonoBehaviour
     /// <summary>
     /// 「TapEffectController」クラスの初期設定を行う
     /// </summary>
-    public void SetUpTapEffectController()
+    /// <param name="canvasTran">「Canvas」の位置情報</param>
+    /// <param name="pos">エフェクトの座標</param>
+    public void SetUpTapEffectController(Transform canvasTran, Vector3 pos)
     {
+        //自身の親を設定する
+        transform.SetParent(canvasTran);
+
+        //自身の座標を設定する
+        transform.localPosition = pos;
+
         //タップ時のエフェクトを行う
         PlayTapEffectAsync(this.GetCancellationTokenOnDestroy()).Forget();
-
-        //常にメインカメラの方向を向く
-        this.UpdateAsObservable()
-            .Subscribe(_ => transform.LookAt(Camera.main.transform.position))
-            .AddTo(this);
     }
 
     /// <summary>
