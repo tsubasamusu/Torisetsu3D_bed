@@ -777,7 +777,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &983796359
 Transform:
   m_ObjectHideFlags: 0
@@ -816,7 +816,7 @@ VideoPlayer:
   m_AudioOutputMode: 2
   m_TargetAudioSources: []
   m_DirectAudioVolumes: []
-  m_Url: 
+  m_Url: https://youtu.be/Gpi0ykJdD0c
   m_EnabledAudioTracks: 
   m_DirectAudioMutes: 
   m_ControlledAudioTrackCount: 0
@@ -838,10 +838,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79df0376eee9e74f99782d77375f007, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bothSideVideoTime: 0.5
   videoPlayer: {fileID: 983796360}
   imgBackground: {fileID: 1606186974}
   informationRawImage: {fileID: 745784296}
-  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &1072632249
 GameObject:
   m_ObjectHideFlags: 0
@@ -1529,7 +1530,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1606186973
 RectTransform:
   m_ObjectHideFlags: 0

@@ -12,6 +12,12 @@ using UnityEngine.Video;
 public class OpeningController : MonoBehaviour
 {
     /// <summary>
+    /// 動画の再生前・再生後の時間間隔
+    /// </summary>
+    [SerializeField]
+    private float bothSideVideoTime;
+
+    /// <summary>
     /// VideoPlayer
     /// </summary>
     [SerializeField]
@@ -24,7 +30,7 @@ public class OpeningController : MonoBehaviour
     private Image imgBackground;
 
     /// <summary>
-    /// インフォメーション表示用の「RawImage」
+    /// 説明動画表示用の「RawImage」
     /// </summary>
     [SerializeField]
     private RawImage informationRawImage;
@@ -54,9 +60,32 @@ public class OpeningController : MonoBehaviour
         //背景の色を設定する
         imgBackground.color = backgroundColor;
 
-        imgBackground.DOFade(0f, 0f);
+        //説明動画表示用の「RawImage」を非活性化する
+        informationRawImage.gameObject.SetActive(false);
 
         //一定時間待つ
-        await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: token);
+        await UniTask.Delay(TimeSpan.FromSeconds(bothSideVideoTime), cancellationToken: token);
+
+        //説明動画を再生する
+        videoPlayer.Play();
+
+        //説明動画表示用の「RawImage」を活性化する
+        informationRawImage.gameObject.SetActive(true);
+
+        //「OnVideoEnd()」を登録する
+        videoPlayer.loopPointReached += OnVideoEnd;
+    }
+
+    /// <summary>
+    /// 動画の再生が終了した際に呼び出される
+    /// </summary>
+    /// <param name="videoPlayer">動画を再生していた「VideoPlayer」</param>
+    private void OnVideoEnd(VideoPlayer videoPlayer)
+    {
+        //一定時間かけて「RawImage」を徐々に非表示にする
+        informationRawImage.DOFade(0f, bothSideVideoTime).OnComplete(() => Destroy(informationRawImage.gameObject));
+
+        //一定時間かけて背景を徐々に非表示にする
+        imgBackground.DOFade(0f, bothSideVideoTime).OnComplete(() => Destroy(imgBackground.gameObject));
     }
 }
