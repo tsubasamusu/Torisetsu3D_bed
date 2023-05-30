@@ -2,8 +2,6 @@ using Cysharp.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +13,7 @@ public class TapEffectController : MonoBehaviour
     /// <summary>
     /// スプライト間の秒数
     /// </summary>
-    [SerializeField, Range(0f, 0.1f)]
+    [SerializeField, Range(0f, 0.01f)]
     private float timeBtweenSprites;
 
     /// <summary>
