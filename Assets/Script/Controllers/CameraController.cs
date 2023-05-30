@@ -132,28 +132,21 @@ public class CameraController : MonoBehaviour
     /// </summary>
     private void UpdateAngleAndPos()
     {
+        //カメラの座標を維持する
+        transform.position = transform.rotation * new Vector3(0.0f, 0.0f, -distance) + lookTran.position;
+
+        //指が「UI」に触れているなら、以降の処理を行わない
+        if (TouchingUI()) return;
+
         //1本指でタッチされていないなら、以降の処理を行わない
-        if (!Input.GetMouseButton(0) && (!Input.touchSupported || Input.touchCount != 1)) return;
+        if (!Input.touchSupported || Input.touchCount != 1) return;
 
-        //「x」方向の移動量を取得する
-        float moveValueX = Input.GetAxis("Mouse X");
+        //タッチの情報を取得する
+        Touch touch = Input.GetTouch(0);
 
-        //「y」方向の移動量を取得する
-        float moveValueY = Input.GetAxis("Mouse Y");
-
-        //使用デバイスがタッチ入力をサポートしているなら
-        if (Input.touchSupported)
-        {
-            //タッチの情報を取得する
-            Touch touch = Input.GetTouch(0);
-
-            //指が「UI」に触れているなら、以降の処理を行わない
-            if (TouchingUI()) return;
-
-            //各方向の移動量を調整する
-            moveValueX = touch.phase == TouchPhase.Moved ? -touch.deltaPosition.x : 0f;
-            moveValueY = touch.phase == TouchPhase.Moved ? -touch.deltaPosition.y : 0f;
-        }
+        //各方向の移動量を調整する
+        float moveValueX = touch.phase == TouchPhase.Moved ? -touch.deltaPosition.x : 0f;
+        float moveValueY = touch.phase == TouchPhase.Moved ? -touch.deltaPosition.y : 0f;
 
         //現在の各角度を更新する
         currentAngleX += moveValueX * xSpeed * Time.deltaTime;
@@ -172,7 +165,7 @@ public class CameraController : MonoBehaviour
         transform.rotation = rotation;
 
         //カメラの座標を設定する
-        transform.position = rotation * new Vector3(0.0f, 0.0f, -distance) + lookTran.position;
+        transform.position = (rotation * new Vector3(0.0f, 0.0f, -distance)) + lookTran.position;
     }
 
     /// <summary>
