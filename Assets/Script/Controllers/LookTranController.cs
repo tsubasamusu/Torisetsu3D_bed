@@ -6,7 +6,6 @@ using System.Threading;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
-using UnityEngine.UI;
 
 /// <summary>
 /// ƒJƒƒ‰‚Ì‘ÎÛˆÊ’u‚ğ§Œä‚·‚é
